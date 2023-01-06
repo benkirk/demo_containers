@@ -1,0 +1,9 @@
+# ch-test-scope: standard
+FROM docker://almalinux:8
+
+RUN dnf install -y --setopt=install_weak_deps=false gcc which \
+ && dnf clean all
+
+COPY . hello
+
+RUN touch /usr/bin/pm-ssh
