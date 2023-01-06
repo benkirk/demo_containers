@@ -22,7 +22,8 @@ clean_container_dirs()
 clean_container_dirs
 
 
-[ -f ~/.config/containers/storage.conf ] || cat > ~/.config/containers/storage.conf <<EOF
+[ -f ~/.config/containers/storage.conf ] \
+    || mkdir -p ~/.config/containers/ && cat > ~/.config/containers/storage.conf <<EOF
 [storage]
    driver="vfs"
    runroot="/var/tmp/${USER}_podman/images"
