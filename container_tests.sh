@@ -44,11 +44,19 @@ try_command ch-image build --force .
 try_command ch-image list
 try_command ch-convert minimal /var/tmp/${USER}/minimal
 
-label="CharlieCloud minimal -- run"
+label="Charliecloud minimal -- run"
 message_running ${label}
 try_command ch-run /var/tmp/${USER}/minimal -- cat /etc/redhat-release
 try_command "ch-run /var/tmp/${USER}/minimal -- rpm -qa | sort | uniq"
 try_command ch-run /var/tmp/${USER}/minimal -- gcc --version
+
+# Charliecloud internal SquashFUSE support - requires https://github.com/spack/spack/pull/34847
+label="Charliecloud minimal -- SquashFUSE"
+message_running ${label}
+try_command ch-convert minimal ./minimal.sqfs
+try_command ch-run ./minimal.sqfs -- cat /etc/redhat-release
+try_command ch-run ./minimal.sqfs -- gcc --version
+
 
 
 #----------------------------------------------------------------------------

@@ -1,4 +1,4 @@
-. /glade/u/home/benkirk/bugreports/spack/container_runtimes/spack/share/spack/setup-env.sh || exit 1
+. /glade/u/home/benkirk/bugreports/spack/charliecloud/spack/share/spack/setup-env.sh || exit 1
 
 spack env activate -p container_env || exit 1
 

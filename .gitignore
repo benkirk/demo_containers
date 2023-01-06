@@ -1,3 +1,5 @@
 *~
+*.sqfs
 minimal/Dockerfile
+
 singularity/*.sif
