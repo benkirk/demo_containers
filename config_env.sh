@@ -2,7 +2,16 @@
 
 spack env activate -p container_env || exit 1
 
+# preliminaries - podman at least seems to require a local filesystem, try leaving TMPDIR on lustre
+# and I see failures...
 TMPDIR=/var/tmp/${USER}/container_tmp && mkdir -p ${TMPDIR}
+clean_container_dirs()
+{
+    chmod -R u+rwX /var/tmp/${USER}*
+    rm -rf /var/tmp/${USER}*
+    mkdir -p /var/tmp/${USER}
+    [ -d ${TMPDIR} ] || mkdir -p ${TMPDIR}
+}
 
 for exe in podman ch-image singularity ; do
     which $exe && $exe --version && echo || exit 1

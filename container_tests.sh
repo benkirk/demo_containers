@@ -1,5 +1,19 @@
 #!/bin/bash
 
+# process any command line args:
+full_tests=false
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        -a|--full-tests)
+            full_tests=true
+            ;;
+        *)
+            ;;
+    esac
+    shift
+done
+
 #----------------------------------------------------------------------------
 # environment
 SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
@@ -57,6 +71,8 @@ try_command ch-convert minimal ./minimal.sqfs
 try_command ch-run ./minimal.sqfs -- cat /etc/redhat-release
 try_command ch-run ./minimal.sqfs -- gcc --version
 
+# optionally, additional Charliecloud tests:
+[[ true == ${full_tests} ]] && ${SCRIPTDIR}/charliecloud_tests.sh
 
 
 #----------------------------------------------------------------------------
