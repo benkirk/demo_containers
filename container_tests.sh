@@ -3,8 +3,6 @@
 #----------------------------------------------------------------------------
 # environment
 SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-# [ -f ${SCRIPTDIR}/sanitize_env.sh ] && . ${SCRIPTDIR}/sanitize_env.sh || \
-#      { echo "cannot locate ${SCRIPTDIR}/sanitize_env.sh}"; exit 1; }
 [ -f ${SCRIPTDIR}/config_env.sh ] && . ${SCRIPTDIR}/config_env.sh || \
     { echo "cannot locate ${SCRIPTDIR}/config_env.sh}"; exit 1; }
 #----------------------------------------------------------------------------
@@ -13,7 +11,7 @@ spack env activate -p container_env
 
 
 # preliminaries - podman at least seems to require a local filesystem, try leaving TMPDIR on lustre
-# and I expect failures...
+# and I see failures...
 clean_container_dirs()
 {
     chmod -R u+rwX /var/tmp/${USER}*
@@ -35,35 +33,35 @@ clean_container_dirs
 
 EOF
 
-# #----------------------------------------------------------------------------
-# cd ${SCRIPTDIR}/minimal || exit 1
-# label="CharlieCloud minimal -- build"
-# message_running ${label}
-# ln -sf Dockerfile.ch Dockerfile
+#----------------------------------------------------------------------------
+cd ${SCRIPTDIR}/minimal || exit 1
+label="CharlieCloud minimal -- build"
+message_running ${label}
+ln -sf Dockerfile.ch Dockerfile
 
-# try_command ch-image build --force .
-# try_command ch-image list
-# try_command ch-convert minimal /var/tmp/${USER}/minimal
+try_command ch-image build --force .
+try_command ch-image list
+try_command ch-convert minimal /var/tmp/${USER}/minimal
 
-# label="CharlieCloud minimal -- run"
-# message_running ${label}
-# try_command ch-run /var/tmp/${USER}/minimal -- cat /etc/redhat-release
-# try_command "ch-run /var/tmp/${USER}/minimal -- rpm -qa | sort | uniq"
-# try_command ch-run /var/tmp/${USER}/minimal -- gcc --version
-
-
-# #----------------------------------------------------------------------------
-# cd ${SCRIPTDIR}/minimal || exit 1
-# label="Podman minimal -- build"
-# message_running ${label}
-# ln -sf Dockerfile.podman Dockerfile
+label="CharlieCloud minimal -- run"
+message_running ${label}
+try_command ch-run /var/tmp/${USER}/minimal -- cat /etc/redhat-release
+try_command "ch-run /var/tmp/${USER}/minimal -- rpm -qa | sort | uniq"
+try_command ch-run /var/tmp/${USER}/minimal -- gcc --version
 
 
-# try_command podman build --tag minimal .
-# try_command podman images
-# try_command podman run minimal cat /etc/redhat-release
-# try_command "podman run minimal rpm -qa | sort | uniq"
-# try_command podman run minimal gcc --version
+#----------------------------------------------------------------------------
+cd ${SCRIPTDIR}/minimal || exit 1
+label="Podman minimal -- build"
+message_running ${label}
+ln -sf Dockerfile.podman Dockerfile
+
+
+try_command podman build --tag minimal .
+try_command podman images
+try_command podman run minimal cat /etc/redhat-release
+try_command "podman run minimal rpm -qa | sort | uniq"
+try_command podman run minimal gcc --version
 
 
 
