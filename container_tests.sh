@@ -50,7 +50,7 @@ EOF
 
 #----------------------------------------------------------------------------
 cd ${SCRIPTDIR}/minimal || exit 1
-label="CharlieCloud minimal -- build"
+label="Charliecloud minimal -- build"
 message_running ${label}
 ln -sf Dockerfile.ch Dockerfile
 
@@ -87,6 +87,9 @@ try_command podman images
 try_command podman run minimal cat /etc/redhat-release
 try_command "podman run minimal rpm -qa | sort | uniq"
 try_command podman run minimal gcc --version
+
+# optionally, additional podman tests:
+[[ true == ${full_tests} ]] && ${SCRIPTDIR}/podman_tests.sh
 
 
 

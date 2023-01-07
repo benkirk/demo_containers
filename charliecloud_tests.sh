@@ -37,8 +37,29 @@ label="Charliecloud openhpc -- SquashFUSE image"
 message_running ${label}
 try_command ch-run ./openhpc.sqfs -- cat /etc/os-release /etc/ohpc-release
 try_command ch-run ./openhpc.sqfs -- gcc --version
-try_command ch-run ./openhpc.sqfs --  bash -c \
-            '". /etc/profile.d/lmod.sh && module avail && module list && which mpicxx"'
+try_command ch-run ./openhpc.sqfs -- bash -lc \
+            '". /etc/profile.d/lmod.sh && module avail && module list && which mpicxx && mpicxx --version"'
+
+cd ${SCRIPTDIR}/rockylinux || exit 1
+label="Charliecloud pull, convert (SquashFUSE), & run rocky8 image"
+message_running ${label}
+try_command ch-image pull benjaminkirk/rocky8-libmesh-prereqs:0.0.1
+try_command ch-image list
+rm -f ./rocky8-libmesh-prereqs.sqfs
+try_command ch-convert benjaminkirk/rocky8-libmesh-prereqs:0.0.1 ./rocky8-libmesh-prereqs.sqfs
+try_command ch-run ./rocky8-libmesh-prereqs.sqfs -- gcc --version
+try_command ch-run ./rocky8-libmesh-prereqs.sqfs -- bash -lc \
+            '"module use /usr/share/modulefiles && module avail && module load mpi && module list && which mpicxx && mpicxx --version"'
+
+label="Charliecloud pull, convert (SquashFUSE), & run rocky9 image"
+message_running ${label}
+try_command ch-image pull benjaminkirk/rocky9-libmesh-prereqs:0.0.1
+try_command ch-image list
+rm -f ./rocky9-libmesh-prereqs.sqfs
+try_command ch-convert benjaminkirk/rocky9-libmesh-prereqs:0.0.1 ./rocky9-libmesh-prereqs.sqfs
+try_command ch-run ./rocky9-libmesh-prereqs.sqfs -- gcc --version
+try_command ch-run ./rocky9-libmesh-prereqs.sqfs -- bash -lc \
+            '"module use /usr/share/modulefiles && module avail && module load mpi && module list && which mpicxx && mpicxx --version"'
 
 # clean up
 clean_container_dirs
