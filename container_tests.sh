@@ -71,8 +71,9 @@ try_command ch-convert minimal ./minimal.sqfs
 try_command ch-run ./minimal.sqfs -- cat /etc/redhat-release
 try_command ch-run ./minimal.sqfs -- gcc --version
 
-# optionally, additional Charliecloud tests:
+# optionally, additional (expensive) Charliecloud tests:
 [[ true == ${full_tests} ]] && ${SCRIPTDIR}/charliecloud_tests.sh
+
 
 
 #----------------------------------------------------------------------------
@@ -81,14 +82,25 @@ label="Podman minimal -- build"
 message_running ${label}
 ln -sf Dockerfile.podman Dockerfile
 
-
 try_command podman build --tag minimal .
 try_command podman images
 try_command podman run minimal cat /etc/redhat-release
 try_command "podman run minimal rpm -qa | sort | uniq"
 try_command podman run minimal gcc --version
 
-# optionally, additional podman tests:
+label="Podman minimal -- save / rm / load"
+message_running ${label}
+rm -f ./minimal.tar
+try_command "podman save -o minimal.tar minimal && ls -lh minimal.tar"
+try_command podman rm --all # remove all containers first...
+try_command podman image rm --all # so we can remove all images next...
+try_command podman images # should have nothing...
+try_command podman load -i ./minimal.tar # now, load the image we saved and make sure it works
+try_command podman images
+try_command podman run minimal cat /etc/redhat-release
+try_command podman run minimal gcc --version
+
+# optionally, additional (expensive) podman tests:
 [[ true == ${full_tests} ]] && ${SCRIPTDIR}/podman_tests.sh
 
 

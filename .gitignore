@@ -1,5 +1,6 @@
 *~
 *.sqfs
+*.tar
 minimal/Dockerfile
 openhpc/Dockerfile
 singularity/*.sif
