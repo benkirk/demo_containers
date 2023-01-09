@@ -1,5 +1,6 @@
 #!/bin/bash
 
+origARGS=$@
 # process any command line args:
 full_tests=false
 
@@ -72,7 +73,7 @@ try_command ch-run ./minimal.sqfs -- cat /etc/redhat-release
 try_command ch-run ./minimal.sqfs -- gcc --version
 
 # optionally, additional (expensive) Charliecloud tests:
-[[ true == ${full_tests} ]] && ${SCRIPTDIR}/charliecloud_tests.sh
+[[ true == ${full_tests} ]] && ${SCRIPTDIR}/charliecloud_tests.sh ${origARGS}
 
 
 
@@ -101,7 +102,7 @@ try_command podman run minimal cat /etc/redhat-release
 try_command podman run minimal gcc --version
 
 # optionally, additional (expensive) podman tests:
-[[ true == ${full_tests} ]] && ${SCRIPTDIR}/podman_tests.sh
+[[ true == ${full_tests} ]] && ${SCRIPTDIR}/podman_tests.sh ${origARGS}
 
 
 
