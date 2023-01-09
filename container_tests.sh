@@ -125,7 +125,7 @@ try_command singularity exec rocky9-libmesh.sif bash -lc \
             '"module use /usr/share/modulefiles && module avail && module load mpi && module list && which mpicxx && mpicxx --version"'
 label+=" (MPI Inside container)"
 message_running ${label}
-try_command singularity exec rocky9-libmesh.sif bash -lc \
+try_command singularity exec --cleanenv rocky9-libmesh.sif bash -lc \
             '"module use /usr/share/modulefiles && module avail && module load mpi && module list && cd /tmp && touch foo && mpiexec -n 4 /opt/local/libmesh/1.8.0-pre-mpich-x86_64/examples/introduction/ex4/example-opt -d 3 -n 25"'
 
 # clean up
