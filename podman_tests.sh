@@ -64,15 +64,15 @@ fi
 
 if [[ true == ${pull_tests} ]]; then
     cd ${SCRIPTDIR}/rockylinux || exit 1
-    label="Podman pull & run rocky8 image"
-    message_running ${label}
-    try_command podman image pull docker://benjaminkirk/rocky8-libmesh-prereqs:0.0.1
-    try_command podman images
-    # should work but doesn't yet:
-    try_command podman run rocky8-libmesh-prereqs:0.0.1 gcc --version
-    # should work but doesn't yet:
-    try_command podman run rocky8-libmesh-prereqs:0.0.1 bash -lc \
-                '"module use /usr/share/modulefiles && module avail && module load mpi && module list && which mpicxx && mpicxx --version"'
+    # label="Podman pull & run rocky8 image"
+    # message_running ${label}
+    # try_command podman image pull docker://benjaminkirk/rocky8-libmesh-prereqs:0.0.1
+    # try_command podman images
+    # # should work but doesn't yet:
+    # try_command podman run rocky8-libmesh-prereqs:0.0.1 gcc --version
+    # # should work but doesn't yet:
+    # try_command podman run rocky8-libmesh-prereqs:0.0.1 bash -lc \
+    #             '"module use /usr/share/modulefiles && module avail && module load mpi && module list && which mpicxx && mpicxx --version"'
 
     label="Podman pull & run rocky9 image"
     message_running ${label}
@@ -83,7 +83,7 @@ if [[ true == ${pull_tests} ]]; then
     # should work but doesn't yet:
     try_command podman run rocky9-libmesh:0.0.1 bash -lc \
                 '"module use /usr/share/modulefiles && module avail && module load mpi && module list && which mpicxx && mpicxx --version"'
-    label+="(MPI Inside container)"
+    label+=" (MPI Inside container)"
     message_running ${label}
     # should work but doesn't yet:
     try_command podman run rocky9-libmesh:0.0.1 bash -lc \

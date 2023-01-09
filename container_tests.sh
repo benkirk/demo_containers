@@ -114,13 +114,19 @@ message_running ${label}
 
 try_command singularity pull opensuse15-spack-prereqs.sif docker://benjaminkirk/opensuse15-spack-prereqs:0.0.1
 try_command singularity pull opensuse15-openhpc.sif docker://benjaminkirk/opensuse15-openhpc:0.0.1
-try_command singularity pull rocky9-libmesh-prereqs.sif docker://benjaminkirk/rocky9-libmesh-prereqs:0.0.1
+try_command singularity pull rocky9-libmesh.sif docker://benjaminkirk/rocky9-libmesh:0.0.1
 
-try_command singularity exec --cleanenv opensuse15-openhpc.sif bash -c \
-            '". /etc/profile.d/lmod.sh && module avail && module list && which mpicxx"'
+try_command singularity exec --cleanenv opensuse15-openhpc.sif bash -lc \
+            '"module avail && module list && which mpicxx && mpicxx --version"'
 
-try_command singularity exec rocky9-libmesh-prereqs.sif cat /etc/redhat-release
-try_command singularity exec rocky9-libmesh-prereqs.sif gcc --version
+try_command singularity exec rocky9-libmesh.sif cat /etc/redhat-release
+try_command singularity exec rocky9-libmesh.sif gcc --version
+try_command singularity exec rocky9-libmesh.sif bash -lc \
+            '"module use /usr/share/modulefiles && module avail && module load mpi && module list && which mpicxx && mpicxx --version"'
+label+=" (MPI Inside container)"
+message_running ${label}
+try_command singularity exec rocky9-libmesh.sif bash -lc \
+            '"module use /usr/share/modulefiles && module avail && module load mpi && module list && cd /tmp && touch foo && mpiexec -n 4 /opt/local/libmesh/1.8.0-pre-mpich-x86_64/examples/introduction/ex4/example-opt -d 3 -n 25"'
 
 # clean up
 clean_container_dirs
