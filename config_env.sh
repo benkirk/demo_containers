@@ -1,6 +1,10 @@
-. /glade/u/home/benkirk/bugreports/spack/charliecloud/spack/share/spack/setup-env.sh || exit 1
+if [ -x /glade/u/home/benkirk/bugreports/spack/charliecloud/spack/share/spack/setup-env.sh ]; then
+    . /glade/u/home/benkirk/bugreports/spack/charliecloud/spack/share/spack/setup-env.sh || exit 1
+    spack env activate -p container_env || exit 1
+else
+    . ~benkirk/spack_modules.sh && module load podman charliecloud singularityce || exit 1
+fi
 
-spack env activate -p container_env || exit 1
 
 # preliminaries - podman at least seems to require a local filesystem, try leaving TMPDIR on lustre
 # and I see failures...
