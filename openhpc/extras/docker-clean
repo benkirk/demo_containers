@@ -5,5 +5,5 @@
 [ -x "$(command -v conda)" ] && conda clean -tipsy
 [ -x "$(command -v zypper)" ] && zypper clean -a
 for dir in /tmp/* /var/tmp/* /home/jupyter/{.ccache,.cache/pip,conda-bld,.conda} /root/* /root/.[^.]* /var/lib/apt/lists/* /var/log/*; do
-	[ -e $dir ] && rm -rf $dir || true
+	[ -e $dir ] && rm -rf $dir 2>/dev/null || true
 done

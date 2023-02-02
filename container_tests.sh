@@ -22,7 +22,7 @@ SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
     { echo "cannot locate ${SCRIPTDIR}/config_env.sh}"; exit 1; }
 #----------------------------------------------------------------------------
 
-spack env activate -p container_env
+#spack env activate -p container_env
 
 
 # preliminaries - podman at least seems to require a local filesystem, try leaving TMPDIR on lustre
