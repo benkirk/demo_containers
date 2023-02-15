@@ -4,3 +4,5 @@
 minimal/Dockerfile
 openhpc/Dockerfile
 singularity/*.sif
+*-sandbox/
+mask/

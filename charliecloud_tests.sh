@@ -47,7 +47,7 @@ done
 if [[ true == ${build_tests} ]]; then
     clean_container_dirs
     cd ${SCRIPTDIR}/openhpc || exit 1
-    label="CharlieCloud openhpc -- build"
+    label="Charliecloud openhpc -- build"
     message_running ${label}
     ln -sf Dockerfile.ch Dockerfile
 
