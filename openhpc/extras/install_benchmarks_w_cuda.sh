@@ -5,7 +5,8 @@ set -ex
 cd /tmp && curl -Sl  https://mvapich.cse.ohio-state.edu/download/mvapich/osu-micro-benchmarks-7.0.1.tar.gz | tar xz \
     && cd osu-micro-benchmarks-7.0.1 \
     && ./configure --prefix=/opt/local/osu-micro-benchmarks-7.0.1 \
-                   CXX=$(which mpicxx) CC=$(which mpicc) FC=$(which mpif90) F77=$(which mpif77) \
+                   CXX=$(which mpicxx) CC=$(which mpicc) FC=$(which mpif90) F77=$(which mpif77) LIBS="-L${CUDA_HOME}/targets/x86_64-linux/lib -lcudart" \
+                   --enable-cuda --with-cuda=${CUDA_HOME} \
     && make -j 8 V=0 && make install \
     && cd && rm -rf /tmp/osu-micro-benchmarks-7.0.1 \
     && cd /opt/local && mpicxx -o hello_world_mpi /home/plainuser/hello_world_mpi.C -fopenmp

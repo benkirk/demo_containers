@@ -6,7 +6,7 @@
 #     spack env activate -p container_env || exit 1
 # fi
 
-module purge && module load charliecloud podman singularityce && module list
+module purge && module load charliecloud podman apptainer && module list
 
 # preliminaries - podman at least seems to require a local filesystem, try leaving TMPDIR on lustre
 # and I see failures...
