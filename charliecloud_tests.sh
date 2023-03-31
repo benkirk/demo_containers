@@ -47,23 +47,46 @@ done
 if [[ true == ${build_tests} ]]; then
     clean_container_dirs
     cd ${SCRIPTDIR}/openhpc || exit 1
-    label="Charliecloud openhpc -- build"
+    #label="Charliecloud openhpc -- build"
+    #message_running ${label}
+    #ln -sf Dockerfile.ch Dockerfile
+    #
+    #try_command ch-image build --force .
+    #try_command ch-image list
+    #try_command ch-convert openhpc /var/tmp/${USER}/openhpc
+    #try_command ch-convert openhpc ./openhpc.sqfs
+    #
+    #label="Charliecloud openhpc -- directory image"
+    #message_running ${label}
+    #try_command ch-run /var/tmp/${USER}/openhpc -- cat /etc/os-release /etc/ohpc-release
+    #try_command "ch-run /var/tmp/${USER}/openhpc -- rpm -qa | sort | uniq"
+    #try_command ch-run /var/tmp/${USER}/openhpc -- gcc --version
+    #
+    ## Charliecloud internal SquashFUSE support - requires https://github.com/spack/spack/pull/34847
+    #label="Charliecloud openhpc -- SquashFUSE image"
+    #message_running ${label}
+    #try_command ch-run ./openhpc.sqfs -- cat /etc/os-release /etc/ohpc-release
+    #try_command ch-run ./openhpc.sqfs -- gcc --version
+    #try_command ch-run ./openhpc.sqfs -- bash -lc \
+    #            '". /etc/profile.d/lmod.sh && module avail && module list && which mpicxx && mpicxx --version"'
+
+    label="Charliecloud openhpc+cuda -- build"
     message_running ${label}
-    ln -sf Dockerfile.ch Dockerfile
+    ln -sf Dockerfile-cuda.ch Dockerfile
 
     try_command ch-image build --force .
     try_command ch-image list
     try_command ch-convert openhpc /var/tmp/${USER}/openhpc
     try_command ch-convert openhpc ./openhpc.sqfs
 
-    label="Charliecloud openhpc -- directory image"
+    label="Charliecloud openhpc+cuda -- directory image"
     message_running ${label}
     try_command ch-run /var/tmp/${USER}/openhpc -- cat /etc/os-release /etc/ohpc-release
     try_command "ch-run /var/tmp/${USER}/openhpc -- rpm -qa | sort | uniq"
     try_command ch-run /var/tmp/${USER}/openhpc -- gcc --version
 
     # Charliecloud internal SquashFUSE support - requires https://github.com/spack/spack/pull/34847
-    label="Charliecloud openhpc -- SquashFUSE image"
+    label="Charliecloud openhpc+cuda -- SquashFUSE image"
     message_running ${label}
     try_command ch-run ./openhpc.sqfs -- cat /etc/os-release /etc/ohpc-release
     try_command ch-run ./openhpc.sqfs -- gcc --version

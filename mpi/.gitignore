@@ -1,2 +1,3 @@
 run*.sh.o*
 out_*.*
+*results*

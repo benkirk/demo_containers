@@ -72,7 +72,7 @@ for exe in \
           --env MPICH_GPU_MANAGED_MEMORY_SUPPORT_ENABLED=1 \
           --env LD_PRELOAD=/opt/cray/pe/mpich/8.1.21/gtl/lib/libmpi_gtl_cuda.so.0 \
           ${container_image} \
-          ${exe} D D \
+          ${exe}  \
         || status="FAILED"
     echo "'''"
 
@@ -91,7 +91,7 @@ for exe in \
           --env MPICH_GPU_MANAGED_MEMORY_SUPPORT_ENABLED=1 \
           --env LD_PRELOAD=/opt/cray/pe/mpich/8.1.21/gtl/lib/libmpi_gtl_cuda.so.0 \
           ${container_image} \
-          ${exe} D D \
+          ${exe} \
         || status="FAILED"
     echo "'''"
 
@@ -108,7 +108,7 @@ for exe in \
     echo && echo "bare_metal['intra:$(basename ${exe})']='''"
     mpiexec --np 2 --ppn 2 \
             get_local_rank \
-            ${exe} D D \
+            ${exe} \
         || status="FAILED"
     echo "'''"
 
@@ -117,7 +117,7 @@ for exe in \
     echo && echo "bare_metal['inter:$(basename ${exe})']='''"
     mpiexec --np 2 --ppn 1 \
             get_local_rank \
-            ${exe} D D \
+            ${exe} \
         || status="FAILED"
     echo "'''"
 done
@@ -142,7 +142,7 @@ for exe in \
           --env MPICH_GPU_MANAGED_MEMORY_SUPPORT_ENABLED=1 \
           --env LD_PRELOAD=/opt/cray/pe/mpich/8.1.21/gtl/lib/libmpi_gtl_cuda.so.0 \
           ${container_image} \
-          ${exe} -d managed \
+          ${exe} \
         || status="FAILED"
     echo "'''"
 
@@ -161,7 +161,7 @@ for exe in \
           --env MPICH_GPU_MANAGED_MEMORY_SUPPORT_ENABLED=1 \
           --env LD_PRELOAD=/opt/cray/pe/mpich/8.1.21/gtl/lib/libmpi_gtl_cuda.so.0 \
           ${container_image} \
-          ${exe} -d managed \
+          ${exe} \
         || status="FAILED"
     echo "'''"
 done
@@ -176,7 +176,7 @@ for exe in \
     echo && echo "bare_metal['intra:$(basename ${exe})']='''"
     mpiexec --np 4 --ppn 4 \
             get_local_rank \
-            ${exe} -d managed \
+            ${exe} \
         || status="FAILED"
     echo "'''"
 
@@ -185,7 +185,7 @@ for exe in \
     echo && echo "bare_metal['inter:$(basename ${exe})']='''"
     mpiexec --np 8 --ppn 4 \
             get_local_rank \
-            ${exe} -d managed \
+            ${exe} \
         || status="FAILED"
     echo "'''"
 done
