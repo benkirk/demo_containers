@@ -35,6 +35,25 @@ osu-benchmarks/$(NCAR_BUILD_ENV): Makefile
 	  ./configure --prefix=$${prefix} CXX=$$(which mpicxx) CC=$$(which mpicc) FC=$$(which mpif90) F77=$$(which mpif77) --enable-cuda --with-cuda=$(CUDA_HOME) NVCCFLAGS="-allow-unsupported-compiler" ; \
 	  make -j 8 V=0 && make install
 
+fasteddy/$(NCAR_BUILD_ENV)/FastEddy: fasteddy/$(NCAR_BUILD_ENV)
+
+fasteddy/$(NCAR_BUILD_ENV): Makefile
+	rm -rf $@
+	prefix=$$(pwd)/$@ ; \
+	  mkdir -p $${prefix} ; \
+	  cd $${prefix} ; \
+	  git clone https://github.com/NCAR/FastEddy-model.git ; \
+	  cd $${prefix}/FastEddy-model/SRC && fe_inc= && for d in */ */*/ ; do fe_inc="-I$$(pwd)/$${d} $${fe_inc}" ; done ; \
+	  module list ; \
+	  cd FEMAIN ; \
+          make \
+            TEST_CU_CC="nvcc -allow-unsupported-compiler" \
+            TEST_LDFLAGS="-L$${CUDA_HOME}/targets/x86_64-linux/lib -lcurand -lcudart -lcuda -L$${NETCDF}/lib -lnetcdf" ; \
+	mv ./FastEddy $${prefix}/ ; \
+	cd $${prefix}/ ; \
+	rm -rf $${prefix}/FastEddy-model ; \
+	ldd $${prefix}/FastEddy
+
 results:
 	for stub in "mpi+gpu" "mpi+cpu" ; do \
 	  for file in *$${stub}*.sh.o*[0-9]; do \
