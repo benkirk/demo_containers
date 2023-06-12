@@ -2,11 +2,12 @@
 #PBS -A SCSG0001
 #PBS -q main
 #PBS -j oe
+#PBS -k oed
 #PBS -l walltime=02:00:00
-#PBS -l select=2:ncpus=64:mpiprocs=4:ngpus=4
+#PBS -l select=3:ncpus=64:mpiprocs=4:ngpus=4
 
 ### Set temp to scratch
-[ -d /glade/gust/scratch/${USER} ] && export TMPDIR=/glade/gust/scratch/${USER}/tmp && mkdir -p $TMPDIR
+[[ "x${TMPDIR}" == "x" ]] && export TMPDIR=${SCRATCH}/tmp && mkdir -p $TMPDIR
 
 . config_env.sh >/dev/null 2>&1 || exit 1
 

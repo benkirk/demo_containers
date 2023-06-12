@@ -51,7 +51,7 @@ if [[ true == ${build_tests} ]]; then
     #message_running ${label}
     #ln -sf Dockerfile.ch Dockerfile
     #
-    #try_command ch-image build --force .
+    #try_command ch-image build --force fakeroot .
     #try_command ch-image list
     #try_command ch-convert openhpc /var/tmp/${USER}/openhpc
     #try_command ch-convert openhpc ./openhpc.sqfs
@@ -74,7 +74,7 @@ if [[ true == ${build_tests} ]]; then
     message_running ${label}
     ln -sf Dockerfile-cuda.ch Dockerfile
 
-    try_command ch-image build --force .
+    try_command ch-image build --force fakeroot .
     try_command ch-image list
     try_command ch-convert openhpc /var/tmp/${USER}/openhpc
     try_command ch-convert openhpc ./openhpc.sqfs

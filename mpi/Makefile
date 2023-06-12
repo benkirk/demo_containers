@@ -48,6 +48,7 @@ fasteddy/$(NCAR_BUILD_ENV): Makefile
 	  cd FEMAIN ; \
           make \
             TEST_CU_CC="nvcc -allow-unsupported-compiler" \
+            ARCH_CU_FLAGS="-arch=sm_80" \
             TEST_LDFLAGS="-L$${CUDA_HOME}/targets/x86_64-linux/lib -lcurand -lcudart -lcuda -L$${NETCDF}/lib -lnetcdf" ; \
 	mv ./FastEddy $${prefix}/ ; \
 	cd $${prefix}/ ; \

@@ -55,7 +55,7 @@ label="Charliecloud minimal -- build"
 message_running ${label}
 ln -sf Dockerfile.ch Dockerfile
 
-try_command ch-image build --force .
+try_command ch-image build --force fakeroot .
 try_command ch-image list
 try_command ch-convert minimal /var/tmp/${USER}/minimal
 
