@@ -53,14 +53,14 @@ if [[ true == ${build_tests} ]]; then
     #
     #try_command ch-image build --force fakeroot .
     #try_command ch-image list
-    #try_command ch-convert openhpc /var/tmp/${USER}/openhpc
+    #try_command ch-convert openhpc ${CONTAINER_TMP_PREFIX}/${USER}/openhpc
     #try_command ch-convert openhpc ./openhpc.sqfs
     #
     #label="Charliecloud openhpc -- directory image"
     #message_running ${label}
-    #try_command ch-run /var/tmp/${USER}/openhpc -- cat /etc/os-release /etc/ohpc-release
-    #try_command "ch-run /var/tmp/${USER}/openhpc -- rpm -qa | sort | uniq"
-    #try_command ch-run /var/tmp/${USER}/openhpc -- gcc --version
+    #try_command ch-run ${CONTAINER_TMP_PREFIX}/${USER}/openhpc -- cat /etc/os-release /etc/ohpc-release
+    #try_command "ch-run ${CONTAINER_TMP_PREFIX}/${USER}/openhpc -- rpm -qa | sort | uniq"
+    #try_command ch-run ${CONTAINER_TMP_PREFIX}/${USER}/openhpc -- gcc --version
     #
     ## Charliecloud internal SquashFUSE support - requires https://github.com/spack/spack/pull/34847
     #label="Charliecloud openhpc -- SquashFUSE image"
@@ -76,14 +76,14 @@ if [[ true == ${build_tests} ]]; then
 
     try_command ch-image build --force fakeroot .
     try_command ch-image list
-    try_command ch-convert openhpc /var/tmp/${USER}/openhpc
+    try_command ch-convert openhpc ${CONTAINER_TMP_PREFIX}/${USER}/openhpc
     try_command ch-convert openhpc ./openhpc.sqfs
 
     label="Charliecloud openhpc+cuda -- directory image"
     message_running ${label}
-    try_command ch-run /var/tmp/${USER}/openhpc -- cat /etc/os-release /etc/ohpc-release
-    try_command "ch-run /var/tmp/${USER}/openhpc -- rpm -qa | sort | uniq"
-    try_command ch-run /var/tmp/${USER}/openhpc -- gcc --version
+    try_command ch-run ${CONTAINER_TMP_PREFIX}/${USER}/openhpc -- cat /etc/os-release /etc/ohpc-release
+    try_command "ch-run ${CONTAINER_TMP_PREFIX}/${USER}/openhpc -- rpm -qa | sort | uniq"
+    try_command ch-run ${CONTAINER_TMP_PREFIX}/${USER}/openhpc -- gcc --version
 
     # Charliecloud internal SquashFUSE support - requires https://github.com/spack/spack/pull/34847
     label="Charliecloud openhpc+cuda -- SquashFUSE image"

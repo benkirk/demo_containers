@@ -29,9 +29,9 @@ SCRIPTDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 # and I see failures...
 clean_container_dirs()
 {
-    chmod -R u+rwX /var/tmp/${USER}*
-    rm -rf /var/tmp/${USER}*
-    mkdir -p /var/tmp/${USER}
+    chmod -R u+rwX ${CONTAINER_TMP_PREFIX}/${USER}*
+    rm -rf ${CONTAINER_TMP_PREFIX}/${USER}*
+    mkdir -p ${CONTAINER_TMP_PREFIX}/${USER}
     [ -d ${TMPDIR} ] || mkdir -p ${TMPDIR}
 }
 clean_container_dirs
@@ -41,8 +41,8 @@ clean_container_dirs
     || mkdir -p ~/.config/containers/ && cat > ~/.config/containers/storage.conf <<EOF
 [storage]
    driver="vfs"
-   runroot="/var/tmp/${USER}_podman/images"
-   rootless_storage_path="/var/tmp/${USER}_podman/storage"
+   runroot="${CONTAINER_TMP_PREFIX}/${USER}_podman/images"
+   rootless_storage_path="${CONTAINER_TMP_PREFIX}/${USER}_podman/storage"
 
 [storage.options]
   ignore_chown_errors="true"
@@ -57,13 +57,13 @@ ln -sf Dockerfile.ch Dockerfile
 
 try_command ch-image build --force fakeroot .
 try_command ch-image list
-try_command ch-convert minimal /var/tmp/${USER}/minimal
+try_command ch-convert minimal ${CONTAINER_TMP_PREFIX}/${USER}/minimal
 
 label="Charliecloud minimal -- run"
 message_running ${label}
-try_command ch-run /var/tmp/${USER}/minimal -- cat /etc/redhat-release
-try_command "ch-run /var/tmp/${USER}/minimal -- rpm -qa | sort | uniq"
-try_command ch-run /var/tmp/${USER}/minimal -- gcc --version
+try_command ch-run ${CONTAINER_TMP_PREFIX}/${USER}/minimal -- cat /etc/redhat-release
+try_command "ch-run ${CONTAINER_TMP_PREFIX}/${USER}/minimal -- rpm -qa | sort | uniq"
+try_command ch-run ${CONTAINER_TMP_PREFIX}/${USER}/minimal -- gcc --version
 
 # Charliecloud internal SquashFUSE support - requires https://github.com/spack/spack/pull/34847
 label="Charliecloud minimal -- SquashFUSE"
