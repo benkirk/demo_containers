@@ -3,11 +3,9 @@
 #PBS -q casper
 #PBS -j oe
 #PBS -l walltime=01:00:00
-#PBS -l select=2:ncpus=8:mpiprocs=8:ompthreads=1
-
+#PBS -l select=4:ncpus=8:mpiprocs=8:ompthreads=1
 
 . config_env.sh >/dev/null 2>&1 || exit 1
-
 
 status="SUCCESS"
 
@@ -19,13 +17,8 @@ echo "ldd, container native:"
 singularity \
     --quiet \
     exec \
-        ${container_image} \
-        ldd /opt/local/libmesh/1.8.0-pre-openmpi4-x86_64/examples/introduction/ex4/example-opt
-
-# echo "ldd, host bind:"
-# singularity exec \
-#         ${container_image} \
-#         ldd /opt/local/libmesh/1.8.0-pre-openmpi4-x86_64/examples/introduction/ex4/example-opt
+    ${container_image} \
+    ldd /opt/local/libmesh/1.8.0-pre-openmpi4-x86_64/examples/introduction/ex4/example-opt
 
 [[ "x${PBS_NODEFILE}" != "x" ]] || { echo "Not in a PBS Job, exiting..."; exit 0; }
 
@@ -41,6 +34,6 @@ mpiexec \
     -B /glade/u \
     -B /local_scratch \
     ${container_image} \
-    /opt/local/libmesh/1.8.0-pre-openmpi4-x86_64/examples/introduction/ex4/example-opt -d 3 -n 50
+    /opt/local/libmesh/1.8.0-pre-openmpi4-x86_64/examples/introduction/ex4/example-opt -d 3 -n 80
 
 echo && echo && echo ${status} $(date)
