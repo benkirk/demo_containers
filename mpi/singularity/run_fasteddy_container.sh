@@ -19,12 +19,6 @@ status="SUCCESS"
 #container_image=./rocky8-openhpc-fasteddy-sandbox/
 container_image=./rocky8-openhpc-fasteddy.sif
 
-echo "nvidia-smi, container native:"
-singularity \
-    exec \
-    ${container_image} \
-    nvidia-smi
-
 echo "ldd, container native:"
 singularity \
     exec \
